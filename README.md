@@ -27,15 +27,9 @@ Download the file for your system:
 - 🐧 Linux: `study_swiper-linux-x86_64.tar.gz `  
 
 ### 🔧 Step 2: Make it Executable (Mac/Linux only)
-
-Mac users:    
+ 
 ```bash
-chmod +x study_swiper_mac
-```
-
-Linux users:
-```bash
-chmod +x study_swiper_linux
+chmod +x study_swiper
 ```
 
 ### 🔍 Step 3: Find Your Deck IDs
