@@ -1,6 +1,22 @@
-# 📚 Study Swiper
+<p align="center">
+  <img src="docs/public/images/app_icon_transparent_bg.png" width="150" />
+</p>
 
+<h1 align="center">Study Swiper</h1>
+
+<p align="center">
 A tool that downloads your flashcard decks from StudySmarter (Vaia) to use them offline or import into other apps like Anki!
+</p>
+
+<p align="center">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+  </a>
+  <a href="https://github.com/ton-An/study_swiper/stargazers">
+    <img src="https://img.shields.io/github/stars/ton-An/study_swiper?style=social" />
+  </a>
+</p>
+
 
 > 🚧 **Important: Email/Password Login Only**  
 > Currently, only StudySmarter email/password login is supported. Social logins (Google, Facebook, Apple) won't work.  
