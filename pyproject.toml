@@ -4,7 +4,11 @@ version = "1.0.0"
 description = "Swipes decks from Study Smarter (Vaia)"
 requires-python = ">=3.11"
 dependencies = [
-    "click>=8.1",
+    "click>=8.2",
+    "yaspin>=3.1",
+    "requests>=2.32",
+    "beautifulsoup4>=4.13",
+    "pip-system-certs >=5.2",
 ]
 
 [project.scripts]
