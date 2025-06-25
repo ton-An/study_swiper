@@ -88,6 +88,33 @@ After downloading, you'll find:
 ├── 🖼️ image2.png
 └── …
 ```
+
+## 📥 Importing to Anki
+### Step 1: Copy Images to Anki Media Folder
+
+Important: Copy the images directly (not the folder containing them) to your Anki media folder.
+
+Find your Anki media folder:
+- 🪟 Windows: %APPDATA%\Anki2\User 1\collection.media\
+- 🍎 Mac: ~/Library/Application Support/Anki2/User 1/collection.media/
+- 🐧 Linux: ~/.local/share/Anki2/User 1/collection.media/
+
+-> Copy the images
+
+### Step 2: Import the CSV File
+1. Open Anki Desktop
+2. Click File → Import...
+   2.1 Select your CSV file (e.g., 934059.csv)
+3. Configure import settings:
+    - Field separator: Comma
+    - Field mapping:  
+        Field 1 → Front  
+        Field 2 → Back  
+        Field 3 → Tags   
+4. Click Import
+
+🎉 That's it! Your cards should now appear in Anki with all images working.
+
 ## 🎨 What you'll see while running
 
 The tool shows progress updates:
