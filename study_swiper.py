@@ -9,7 +9,7 @@ def cli():
     pass
 
 @cli.command()
-@click.argument('decks', nargs=-1)
+@click.argument('deck_ids', nargs=-1)
 @click.option('--username', prompt=True, help='Your StudySmarter username')
 @click.option('--password', prompt=True, hide_input=True, help='Your StudySmarter password')
 def run(deck_ids, username, password):
@@ -51,8 +51,9 @@ def run(deck_ids, username, password):
 
     auth_token = get_auth_token(username, password)
 
-    # decks = get_decks(auth_token, deck_ids)
-    #
+    decks = get_decks(auth_token, deck_ids)
+    print(decks)
+    # parsed_decks = parse_decks(decks)
     # save_decks_to_csv(decks)
 
 
@@ -99,4 +100,69 @@ def get_auth_token(username, password):
             raise e
 
 def get_decks(auth_token, deck_ids):
-    click.echo('Fetching decks...')
+    with yaspin(text='Fetching decks', color='cyan') as spinner:
+        try:
+            decks = []
+
+            request_headers = {
+                'Accept': 'application/json',
+                'Authorization': f'Token {auth_token}',
+            }
+
+            for index, deck_id in enumerate(deck_ids):
+                spinner.text = f'Fetching deck {deck_id} - {index + 1}/{len(deck_ids)}'
+                cards_url = f'https://prod.studysmarter.de/studysets/{deck_id}/flashcards/?search=&s_bad=true&s_medium=true&s_good=true&s_trash=false&s_unseen=true&tag_ids=&quantity=20&all=true&order=anti-chronological'
+                tags_url = f'https://prod.studysmarter.de/studysets/{deck_id}/tags/?content_filter=flashcards'
+
+                cards = get_cards(cards_url, request_headers, deck_id, [])
+                tags = get_tags(tags_url, deck_id, request_headers)
+
+                deck = {
+                    'id': deck_id,
+                    'cards': cards,
+                    'tags': tags,
+                }
+                decks.append(deck)
+
+            spinner.color = 'green'
+            spinner.text = 'Decks successfully fetched'
+            spinner.ok('✓')
+
+            return decks
+
+        except Exception as e:
+            spinner.color = 'red'
+            spinner.text = 'Fetching decks failed'
+            spinner.fail('✗')
+            click.echo(click.style(str(e), fg='red'))
+            raise e
+
+def get_cards(url, request_headers, deck_id, existing_cards):
+    request = requests.get(url, headers=request_headers)
+
+    status_code = request.status_code
+
+    cards_json = request.json()
+
+    if status_code != 200:
+        raise Exception(f'Fetching Cards failed: Status code {status_code} - Deck ID {deck_id} -- Server Response: {cards_json}')
+
+
+    cards = existing_cards + cards_json["results"]
+
+    if cards_json["next"] is not None:
+        return get_cards(cards_json["next"], request_headers, deck_id, cards)
+    else:
+        return cards
+
+def get_tags(url, request_headers, deck_id):
+    request = requests.get(url, headers=request_headers)
+
+    status_code = request.status_code
+
+    tags_json = request.json()
+
+    if status_code != 200:
+        raise Exception(f'Fetching Tags failed: Status code {status_code} - Deck ID {deck_id} -- Server Response: {tags_json}')
+
+    return tags_json["all_parent_tags"]
