@@ -46,7 +46,7 @@ jobs:
       - name: Install build dependencies and project
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller flit_core pip-system-certs
+          pip install pyinstaller flit_core certifi
           pip install .
 
       - name: Create PyInstaller entry script (Unix)
@@ -56,8 +56,14 @@ jobs:
           # run_study_swiper.py
           # MUST come before any SSL-using imports!
 
-          import pip_system_certs.wrapt_requests
-          pip_system_certs.wrapt_requests.inject_truststore()
+          import os
+          import ssl
+          # Use system CA bundle or fallback to certifi
+          cafile = ssl.get_default_verify_paths().cafile
+          if not cafile:
+              import certifi
+              cafile = certifi.where()
+          os.environ['SSL_CERT_FILE'] = cafile
 
           from study_swiper import cli
 
@@ -73,8 +79,13 @@ jobs:
           # run_study_swiper.py
           # MUST come before any SSL-using imports!
 
-          import pip_system_certs.wrapt_requests
-          pip_system_certs.wrapt_requests.inject_truststore()
+          import os
+          import ssl
+          cafile = ssl.get_default_verify_paths().cafile
+          if not cafile:
+              import certifi
+              cafile = certifi.where()
+          os.environ['SSL_CERT_FILE'] = cafile
 
           from study_swiper import cli
 
@@ -94,7 +105,7 @@ jobs:
             --hidden-import=yaspin \
             --hidden-import=requests \
             --hidden-import=bs4 \
-            --hidden-import=pip_system_certs.wrapt_requests
+            --hidden-import=certifi
 
       - name: Build standalone executable (Windows)
         if: runner.os == 'Windows'
@@ -107,7 +118,7 @@ jobs:
             --hidden-import=yaspin `
             --hidden-import=requests `
             --hidden-import=bs4 `
-            --hidden-import=pip_system_certs.wrapt_requests
+            --hidden-import=certifi
 
       - name: Package executable
         run: ${{ matrix.package_cmd }}
