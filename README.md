@@ -25,11 +25,14 @@ Download the file for your system:
 
 Mac users:  
 Bash  
-```chmod +x study_swiper_mac```
+```bash
+chmod +x study_swiper_mac
+```
 
-Linux users:  
-Bash  
-```chmod +x study_swiper_linux```
+Linux users:
+```bash
+chmod +x study_swiper_linux
+```
 
 ### 🔍 Step 3: Find Your Deck IDs
 
@@ -37,7 +40,9 @@ Open StudySmarter in your browser
 Go to the deck you want to download  
 
 Look at the URL – it will look like this:  
-```https://app.vaia.com/studyset/934059?trackingSource=studysets_library```
+```text
+https://app.vaia.com/studyset/934059?trackingSource=studysets_library
+```
 
 The deck ID is the number: 934059 📝
 
@@ -45,7 +50,9 @@ The deck ID is the number: 934059 📝
 
 **Easy mode (interactive):**  
 Bash  
-```./study_swiper run```
+```bash
+./study_swiper run
+```
 
 The tool will ask you for:  
 - 👤 Your username  
@@ -54,7 +61,9 @@ The tool will ask you for:
 
 **Quick mode (all at once):**  
 Bash  
-```./study_swiper run 934059 123456 --username yourname --password yourpass```
+```bash
+./study_swiper run 934059 123456 --username yourname --password yourpass
+```
 
 ## 📁 Where are my files?
 
