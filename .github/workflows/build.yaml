@@ -54,19 +54,10 @@ jobs:
         run: |
           cat << 'EOF' > run_study_swiper.py
           # run_study_swiper.py
-          # Suppress pip_system_certs errors on import/inject
-          import sys, os
-          _stderr = sys.stderr
-          try:
-              sys.stderr = open(os.devnull, 'w')
-              import pip_system_certs.wrapt_requests
-              pip_system_certs.wrapt_requests.inject_truststore()
-          except Exception:
-              pass
-          finally:
-              try: sys.stderr.close()
-              except Exception: pass
-              sys.stderr = _stderr
+          # MUST come before any SSL-using imports!
+
+          import pip_system_certs.wrapt_requests
+          pip_system_certs.wrapt_requests.inject_truststore()
 
           from study_swiper import cli
 
@@ -80,19 +71,10 @@ jobs:
         run: |
           @"
           # run_study_swiper.py
-          # Suppress pip_system_certs errors on import/inject
-          import sys, os
-          _stderr = sys.stderr
-          try:
-              sys.stderr = open(os.devnull, 'w')
-              import pip_system_certs.wrapt_requests
-              pip_system_certs.wrapt_requests.inject_truststore()
-          except Exception:
-              pass
-          finally:
-              try: sys.stderr.close()
-              except Exception: pass
-              sys.stderr = _stderr
+          # MUST come before any SSL-using imports!
+
+          import pip_system_certs.wrapt_requests
+          pip_system_certs.wrapt_requests.inject_truststore()
 
           from study_swiper import cli
 
@@ -118,13 +100,13 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          pyinstaller --onefile \
-            --name study_swiper${{ matrix.ext }} \
-            run_study_swiper.py \
-            --hidden-import=click \
-            --hidden-import=yaspin \
-            --hidden-import=requests \
-            --hidden-import=bs4 \
+          pyinstaller --onefile `
+            --name study_swiper${{ matrix.ext }} `
+            run_study_swiper.py `
+            --hidden-import=click `
+            --hidden-import=yaspin `
+            --hidden-import=requests `
+            --hidden-import=bs4 `
             --hidden-import=pip_system_certs.wrapt_requests
 
       - name: Package executable
