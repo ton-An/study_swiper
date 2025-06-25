@@ -5,6 +5,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import urllib.request
+import os
 
 @click.group()
 def cli():
@@ -58,9 +59,7 @@ def run(deck_ids, username, password):
 
     parsed_decks = parse_decks(decks)
 
-    print(parsed_decks)
-
-    #save_images(parsed_decks)
+    save_images(parsed_decks)
 
     # save_decks_to_csv(decks)
 
@@ -201,7 +200,7 @@ def parse_decks(decks):
                     parsed_cards.append(parsed_card)
 
                 parsed_deck = {
-                    'deck_id': deck_id,
+                    'id': deck_id,
                     'cards': parsed_cards,
                 }
                 parsed_decks.append(parsed_deck)
@@ -230,12 +229,9 @@ def parse_card_side(card_side):
     image_urls = []
 
     for image in images:
-        try:
-            file_name = re.search(r'[^/]+(?=\?X-Amz)', image['src']).group(0)
-        except:
-            continue
+        file_name = re.search(r'[^/]+(?=\?X-Amz)', image['src']).group(0)
 
-        image_urls.append(image['src'])
+        image_urls.append({'url': image['src'], 'file_name': file_name})
 
         image['src'] = file_name
 
@@ -253,3 +249,44 @@ def map_tags(tag_ids, tags):
                     "_/", "-/")
                 applied_tags += tag_name + " "
     return applied_tags
+
+def save_images(parsed_decks):
+    with yaspin(text='Fetching decks', color='cyan') as spinner:
+        try:
+            for deck in parsed_decks:
+                deck_id = deck["id"]
+                cards = deck["cards"]
+
+                images = []
+
+                for card in cards:
+                    card_images = card['front']['images'] + card['back']['images']
+
+                    for card_image in card_images:
+                        images.append(card_image)
+
+                for index, image in enumerate(images):
+                    spinner.text = f"Fetching images for deck {deck['id']} - {index + 1} / {len(images)}"
+                    image_url = image['url']
+                    file_name = image['file_name']
+
+                    file_path = f'{deck_id}/{file_name}'
+
+                    os.makedirs(deck_id, exist_ok=True)
+
+                    urllib.request.urlretrieve(image_url, file_path)
+
+            spinner.color = 'green'
+            spinner.text = 'Images successfully saved'
+            spinner.ok('✓')
+
+            return parsed_decks
+
+        except Exception as e:
+            spinner.color = 'red'
+            spinner.text = 'Saving Images failed'
+            spinner.fail('✗')
+            click.echo(click.style(str(e), fg='red'))
+            raise e
+
+
