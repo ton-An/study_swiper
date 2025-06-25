@@ -189,8 +189,8 @@ def parse_decks(decks):
 
                 parsed_cards = []
                 for card in cards:
-                    front = sanitize_card_side(card["question_html"][0]["text"])
-                    back = sanitize_card_side(card["answer_html"][0]["text"])
+                    front = parse_card_side(card["question_html"][0]["text"])
+                    back = parse_card_side(card["answer_html"][0]["text"])
                     applied_tags = map_tags(card["community_applied_tag_ids"], tags)
 
                     parsed_card = {
@@ -220,10 +220,29 @@ def parse_decks(decks):
             click.echo(click.style(str(e), fg='red'))
             raise e
 
-def sanitize_card_side(card_side):
+def parse_card_side(card_side):
     sanitized_card_side = card_side.replace("&amp;", "&").replace("‐", "-")
 
-    return sanitized_card_side
+    soup = BeautifulSoup(sanitized_card_side, 'html.parser')
+
+    images = soup.findAll('img')
+
+    image_urls = []
+
+    for image in images:
+        try:
+            file_name = re.search(r'[^/]+(?=\?X-Amz)', image['src']).group(0)
+        except:
+            continue
+
+        image_urls.append(image['src'])
+
+        image['src'] = file_name
+
+    return {
+        'images': image_urls,
+        'parsed_card_side': str(soup),
+    }
 
 def map_tags(tag_ids, tags):
     applied_tags = ""
@@ -234,4 +253,3 @@ def map_tags(tag_ids, tags):
                     "_/", "-/")
                 applied_tags += tag_name + " "
     return applied_tags
-
