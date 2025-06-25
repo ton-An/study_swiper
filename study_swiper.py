@@ -58,6 +58,8 @@ def run(deck_ids, username, password):
 
     parsed_decks = parse_decks(decks)
 
+    print(parsed_decks)
+
     #save_images(parsed_decks)
 
     # save_decks_to_csv(decks)
@@ -179,7 +181,7 @@ def parse_decks(decks):
             parsed_decks = []
 
             for deck in decks:
-                deck_id = deck['deck_id']
+                deck_id = deck['id']
                 cards = deck['cards']
                 tags = deck['tags']
 
@@ -217,7 +219,7 @@ def parse_decks(decks):
             click.echo(click.style(str(e), fg='red'))
             raise e
 
-def sanitize_card_side(card_side, deck_id):
+def sanitize_card_side(card_side):
     sanitized_card_side = card_side.replace("&amp;", "&").replace("‐", "-")
 
     return sanitized_card_side
