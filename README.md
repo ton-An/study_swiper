@@ -1,6 +1,27 @@
-# 📚 StudySmarter Flashcard Downloader
+<p align="center">
+  <img src="docs/public/images/app_icon_transparent_bg.png" width="150" />
+</p>
 
+<h1 align="center">Study Swiper</h1>
+
+<p align="center">
 A tool that downloads your flashcard decks from StudySmarter (Vaia) to use them offline or import into other apps like Anki!
+</p>
+
+<p align="center">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+  </a>
+  <a href="https://github.com/ton-An/study_swiper/stargazers">
+    <img src="https://img.shields.io/github/stars/ton-An/study_swiper?style=social" />
+  </a>
+</p>
+
+
+> 🚧 **Important: Email/Password Login Only**  
+> Currently, only StudySmarter email/password login is supported. Social logins (Google, Facebook, Apple) won't work.  
+>
+> Workaround: Create a new StudySmarter account using email/password specifically for downloading decks.
 
 ## 🎯 What does it do?
 
@@ -15,23 +36,16 @@ This tool lets you:
 
 ### 📥 Step 1: Download the Tool
 
-Go to the Releases page  
+Go to the [Releases page](https://github.com/ton-An/study_swiper/releases) 
 Download the file for your system:  
-- 🪟 Windows: `study_swiper_windows.exe`  
-- 🍎 Mac: `study_swiper_mac`  
-- 🐧 Linux: `study_swiper_linux`  
+- 🪟 Windows: `study_swiper-windows-x86_64.zip`  
+- 🍎 Mac: `study_swiper-macos-arm64.tar.gz` for M-Series Macs (2020 onwards) and `study_swiper-macos-x86_64.tar.gz` for Intel Macs
+- 🐧 Linux: `study_swiper-linux-x86_64.tar.gz `  
 
 ### 🔧 Step 2: Make it Executable (Mac/Linux only)
-
-Mac users:  
-Bash  
+ 
 ```bash
-chmod +x study_swiper_mac
-```
-
-Linux users:
-```bash
-chmod +x study_swiper_linux
+chmod +x study_swiper
 ```
 
 ### 🔍 Step 3: Find Your Deck IDs
@@ -62,7 +76,7 @@ The tool will ask you for:
 **Quick mode (all at once):**  
 Bash  
 ```bash
-./study_swiper run 934059 123456 --username yourname --password yourpass
+./study_swiper run 934059 123456 --username ted --password mosbius123
 ```
 
 ## 📁 Where are my files?
