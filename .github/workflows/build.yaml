@@ -1,10 +1,9 @@
 name: Build & Release study_swiper CLI
 
 on:
-  workflow_dispatch:
   push:
     tags:
-      - 'v*.*.*'  # Trigger when you push a tag like v1.0.0
+      - 'v*.*.*'  # Trigger on version tags
 
 jobs:
   build:
@@ -12,25 +11,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # ---------- Linux x86_64 ----------
           - os: ubuntu-latest
             artifact_suffix: linux-x86_64
             ext: ''
             package_cmd: |
               tar -C dist -czf study_swiper-linux-x86_64.tar.gz study_swiper
-          # ---------- Windows x86_64 ----------
           - os: windows-latest
             artifact_suffix: windows-x86_64
             ext: '.exe'
             package_cmd: |
-              powershell Compress-Archive -Path dist\study_swiper.exe -DestinationPath study_swiper-windows-x86_64.zip
-          # ---------- macOS Intel ----------
+              powershell Compress-Archive -Path dist\\study_swiper.exe -DestinationPath study_swiper-windows-x86_64.zip
           - os: macos-12
             artifact_suffix: macos-x86_64
             ext: ''
             package_cmd: |
               tar -C dist -czf study_swiper-macos-x86_64.tar.gz study_swiper
-          # ---------- macOS Apple Silicon ----------
           - os: macos-14
             artifact_suffix: macos-arm64
             ext: ''
@@ -49,15 +44,23 @@ jobs:
       - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          # PyInstaller 6.7+ supports all our targets, no cross flags needed
           pip install pyinstaller flit_core
 
-      - name: Build standalone executable with PyInstaller
+      - name: Create PyInstaller entry script
+        run: |
+          cat << 'EOF' > run_study_swiper.py
+          from study_swiper import cli
+
+          if __name__ == '__main__':
+              cli()
+          EOF
+
+      - name: Build standalone executable
         run: |
           pyinstaller \
             --onefile \
             --name study_swiper${{ matrix.ext }} \
-            -m study_swiper:cli
+            run_study_swiper.py
 
       - name: Package executable
         run: ${{ matrix.package_cmd }}
@@ -78,8 +81,7 @@ jobs:
       contents: write
 
     steps:
-      - name: Download all build artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           path: dist
 
