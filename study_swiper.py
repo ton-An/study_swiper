@@ -1,6 +1,7 @@
 import click
-import time
 from yaspin import yaspin
+import uuid
+import requests
 
 @click.group()
 def cli():
@@ -11,7 +12,7 @@ def cli():
 @click.argument('decks', nargs=-1)
 @click.option('--username', prompt=True, help='Your StudySmarter username')
 @click.option('--password', prompt=True, hide_input=True, help='Your StudySmarter password')
-def run(decks, username, password):
+def run(deck_ids, username, password):
     """Download flashcard decks from StudySmarter by their IDs.
 
     Deck ids are the IDs of the decks you want to download. You can specify
@@ -39,31 +40,63 @@ def run(decks, username, password):
     """
 
 
-    if len(decks) == 0:
-        # Prompt for deck IDs
+    if len(deck_ids) == 0:
         deck_input = click.prompt('Enter deck IDs (space-separated)', default='', show_default=False)
-        decks = deck_input.split()
+        deck_ids = deck_input.split()
 
-        if len(decks) == 0:
+        if len(deck_ids) == 0:
             click.echo(
                 click.style('Please specify at least one deck id. For help run study_swiper run --help', fg='red'))
             return
 
     auth_token = get_auth_token(username, password)
 
+    # decks = get_decks(auth_token, deck_ids)
+    #
+    # save_decks_to_csv(decks)
+
+
 
 def get_auth_token(username, password):
-    with yaspin(text="Authenticating", color="cyan") as spinner:
+    with yaspin(text='Authenticating', color='cyan') as spinner:
         try:
-            # Your authentication logic here
-            time.sleep(2)  # Simulate auth delay
+            auth_url = 'https://prod.studysmarter.de/api-token-auth/'
 
-            spinner.ok("✓")  # Show success
-            click.echo(click.style('Authentication successful', fg='green'))
+            amplitude_device_id = uuid.uuid4()
 
-            return "your_auth_token"
+            auth_request_body = {
+                'amplitude_device_id': str(amplitude_device_id),
+                'password': password,
+                'platform': 'webapp',
+                'username': username,
+            }
+
+            request =  requests.post(auth_url, json= auth_request_body)
+
+            status_code = request.status_code
+
+            response_body = request.json()
+
+            errors = response_body.get('errors', [])
+
+            if len(errors) > 0:
+                raise Exception(f'Authentication failed with status code: {status_code} and errors: {errors}')
+
+            access_token = response_body['token']
+
+            spinner.color = 'green'
+            spinner.text = 'Authentication successful'
+            spinner.ok('✓')
+
+            return access_token
+
 
         except Exception as e:
-            spinner.fail("✗")  # Show failure
-            click.echo(click.style(f'Authentication failed: {str(e)}', fg='red'))
+            spinner.color = 'red'
+            spinner.text = 'Authentication failed'
+            spinner.fail('✗')
+            click.echo(click.style(str(e), fg='red'))
             raise e
+
+def get_decks(auth_token, deck_ids):
+    click.echo('Fetching decks...')
