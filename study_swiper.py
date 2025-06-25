@@ -311,6 +311,10 @@ def save_decks_to_csv(parsed_decks):
                         tags = card['tags']
                         writer.writerow([front, back, tags])
 
+            spinner.color = 'green'
+            spinner.text = 'Decks successfully saved to CSV'
+            spinner.ok('✓')
+
         except Exception as e:
             spinner.color = 'red'
             spinner.text = 'Saving Decks to CSV failed'
