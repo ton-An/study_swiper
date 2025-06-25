@@ -2,9 +2,10 @@ name: Build & Release study_swiper CLI
 
 on:
   workflow_dispatch:
+
   push:
     tags:
-      - 'v*.*.*'  # Trigger on version tags like v1.0.0
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -22,7 +23,7 @@ jobs:
             ext: '.exe'
             package_cmd: |
               powershell Compress-Archive -Path dist\\study_swiper.exe -DestinationPath study_swiper-windows-x86_64.zip
-          - os: macos-12
+          - os: macos-13
             artifact_suffix: macos-x86_64
             ext: ''
             package_cmd: |
