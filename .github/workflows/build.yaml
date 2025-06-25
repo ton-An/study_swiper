@@ -55,8 +55,17 @@ jobs:
           cat << 'EOF' > run_study_swiper.py
           # run_study_swiper.py
           # MUST come before any SSL-using imports!
+
+          import logging
+          # Silence pip_system_certs logger noise
+          logging.getLogger('pip_system_certs').setLevel(logging.CRITICAL)
+
           import pip_system_certs.wrapt_requests
-          pip_system_certs.wrapt_requests.inject_truststore()
+          try:
+              pip_system_certs.wrapt_requests.inject_truststore()
+          except Exception:
+              # Some platforms may not expose a system truststore hook
+              pass
 
           from study_swiper import cli
 
@@ -71,8 +80,17 @@ jobs:
           @"
           # run_study_swiper.py
           # MUST come before any SSL-using imports!
+
+          import logging
+          # Silence pip_system_certs logger noise
+          logging.getLogger('pip_system_certs').setLevel(logging.CRITICAL)
+
           import pip_system_certs.wrapt_requests
-          pip_system_certs.wrapt_requests.inject_truststore()
+          try:
+              pip_system_certs.wrapt_requests.inject_truststore()
+          except Exception:
+              # Some platforms may not expose a system truststore hook
+              pass
 
           from study_swiper import cli
 
