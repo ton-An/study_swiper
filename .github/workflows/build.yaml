@@ -54,18 +54,19 @@ jobs:
         run: |
           cat << 'EOF' > run_study_swiper.py
           # run_study_swiper.py
-          # MUST come before any SSL-using imports!
-
-          import logging
-          # Silence pip_system_certs logger noise
-          logging.getLogger('pip_system_certs').setLevel(logging.CRITICAL)
-
-          import pip_system_certs.wrapt_requests
+          # Suppress pip_system_certs errors on import/inject
+          import sys, os
+          _stderr = sys.stderr
           try:
+              sys.stderr = open(os.devnull, 'w')
+              import pip_system_certs.wrapt_requests
               pip_system_certs.wrapt_requests.inject_truststore()
           except Exception:
-              # Some platforms may not expose a system truststore hook
               pass
+          finally:
+              try: sys.stderr.close()
+              except Exception: pass
+              sys.stderr = _stderr
 
           from study_swiper import cli
 
@@ -79,18 +80,19 @@ jobs:
         run: |
           @"
           # run_study_swiper.py
-          # MUST come before any SSL-using imports!
-
-          import logging
-          # Silence pip_system_certs logger noise
-          logging.getLogger('pip_system_certs').setLevel(logging.CRITICAL)
-
-          import pip_system_certs.wrapt_requests
+          # Suppress pip_system_certs errors on import/inject
+          import sys, os
+          _stderr = sys.stderr
           try:
+              sys.stderr = open(os.devnull, 'w')
+              import pip_system_certs.wrapt_requests
               pip_system_certs.wrapt_requests.inject_truststore()
           except Exception:
-              # Some platforms may not expose a system truststore hook
               pass
+          finally:
+              try: sys.stderr.close()
+              except Exception: pass
+              sys.stderr = _stderr
 
           from study_swiper import cli
 
