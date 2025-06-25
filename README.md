@@ -94,7 +94,7 @@ The tool shows progress updates:
 
 - 🔐 **Authenticating** → ✅ Authentication successful  
 - 📥 **Fetching decks** → ✅ Decks successfully fetched  
-- 🔄 **Parsing deck 934059** → ✅ Decks successfully parsed  
+- 🔄 **Parsing deck** → ✅ Decks successfully parsed  
 - 🖼️ **Fetching images** → ✅ Images successfully saved  
 - 💾 **Saving to CSV** → ✅ Decks successfully saved to CSV  
 
