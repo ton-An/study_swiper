@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/public/images/app_icon_transparent_bg.png" width="150" />
+  <img src="logo.png" width="350" />
 </p>
 
 <h1 align="center">Study Swiper</h1>
