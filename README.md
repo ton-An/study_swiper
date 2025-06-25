@@ -50,10 +50,9 @@ chmod +x study_swiper
 
 ### 🔍 Step 3: Find Your Deck IDs
 
-Open StudySmarter in your browser  
-Go to the deck you want to download  
-
-Look at the URL – it will look like this:  
+1. Open StudySmarter in your browser  
+2. Go to the deck you want to download  
+3. Look at the URL – it will look like this:  
 ```text
 https://app.vaia.com/studyset/934059?trackingSource=studysets_library
 ```
