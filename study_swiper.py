@@ -2,6 +2,9 @@ import click
 from yaspin import yaspin
 import uuid
 import requests
+import re
+from bs4 import BeautifulSoup
+import urllib.request
 
 @click.group()
 def cli():
@@ -52,8 +55,11 @@ def run(deck_ids, username, password):
     auth_token = get_auth_token(username, password)
 
     decks = get_decks(auth_token, deck_ids)
-    print(decks)
-    # parsed_decks = parse_decks(decks)
+
+    parsed_decks = parse_decks(decks)
+
+    #save_images(parsed_decks)
+
     # save_decks_to_csv(decks)
 
 
@@ -165,4 +171,64 @@ def get_tags(url, request_headers, deck_id):
     if status_code != 200:
         raise Exception(f'Fetching Tags failed: Status code {status_code} - Deck ID {deck_id} -- Server Response: {tags_json}')
 
-    return tags_json["all_parent_tags"]
+    return tags_json['all_parent_tags']
+
+def parse_decks(decks):
+    with yaspin(text='Fetching decks', color='cyan') as spinner:
+        try:
+            parsed_decks = []
+
+            for deck in decks:
+                deck_id = deck['deck_id']
+                cards = deck['cards']
+                tags = deck['tags']
+
+                spinner.text = f'Parsing deck {deck_id}'
+
+                parsed_cards = []
+                for card in cards:
+                    front = sanitize_card_side(card["question_html"][0]["text"])
+                    back = sanitize_card_side(card["answer_html"][0]["text"])
+                    applied_tags = map_tags(card["community_applied_tag_ids"], tags)
+
+                    parsed_card = {
+                        'front': front,
+                        'back': back,
+                        'tags': applied_tags,
+                    }
+                    parsed_cards.append(parsed_card)
+
+                parsed_deck = {
+                    'deck_id': deck_id,
+                    'cards': parsed_cards,
+                }
+
+
+            spinner.color = 'green'
+            spinner.text = 'Decks successfully parsed'
+            spinner.ok('✓')
+
+            return parsed_decks
+
+        except Exception as e:
+            spinner.color = 'red'
+            spinner.text = 'Parsing decks failed'
+            spinner.fail('✗')
+            click.echo(click.style(str(e), fg='red'))
+            raise e
+
+def sanitize_card_side(card_side, deck_id):
+    sanitized_card_side = card_side.replace("&amp;", "&").replace("‐", "-")
+
+    return sanitized_card_side
+
+def map_tags(tag_ids, tags):
+    applied_tags = ""
+    for tag_id in tag_ids:
+        for tag in tags:
+            if tag["id"] == tag_id:
+                tag_name = tag["name"].replace("‐", "-").replace(":", "").replace(" ", "::").replace("-", "_").replace(
+                    "_/", "-/")
+                applied_tags += tag_name + " "
+    return applied_tags
+
