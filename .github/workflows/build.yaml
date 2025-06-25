@@ -32,6 +32,7 @@ jobs:
             ext: ''
             package_cmd: |
               tar -C dist -czf study_swiper-macos-arm64.tar.gz study_swiper
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -52,13 +53,14 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           cat << 'EOF' > run_study_swiper.py
-          import os
-          import pip_system_certs
-          # Point SSL to system cert store
-          os.environ['SSL_CERT_FILE'] = pip_system_certs.where()
+          # run_study_swiper.py
+          # MUST come before any SSL-using imports!
+          import pip_system_certs.wrapt_requests
+          pip_system_certs.wrapt_requests.inject_truststore()
+
           from study_swiper import cli
 
-          if __name__ == '__main__':
+          if __name__ == "__main__":
               cli()
           EOF
 
@@ -67,13 +69,14 @@ jobs:
         shell: pwsh
         run: |
           @"
-          import os
-          import pip_system_certs
-          # Point SSL to system cert store
-          os.environ['SSL_CERT_FILE'] = pip_system_certs.where()
+          # run_study_swiper.py
+          # MUST come before any SSL-using imports!
+          import pip_system_certs.wrapt_requests
+          pip_system_certs.wrapt_requests.inject_truststore()
+
           from study_swiper import cli
 
-          if __name__ == '__main__':
+          if __name__ == "__main__":
               cli()
           "@ | Out-File -Encoding ASCII run_study_swiper.py
 
@@ -89,13 +92,20 @@ jobs:
             --hidden-import=yaspin \
             --hidden-import=requests \
             --hidden-import=bs4 \
-            --hidden-import=pip_system_certs
+            --hidden-import=pip_system_certs.wrapt_requests
 
       - name: Build standalone executable (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          pyinstaller --onefile --name study_swiper${{ matrix.ext }} run_study_swiper.py --hidden-import=click --hidden-import=yaspin --hidden-import=requests --hidden-import=bs4 --hidden-import=pip_system_certs
+          pyinstaller --onefile \
+            --name study_swiper${{ matrix.ext }} \
+            run_study_swiper.py \
+            --hidden-import=click \
+            --hidden-import=yaspin \
+            --hidden-import=requests \
+            --hidden-import=bs4 \
+            --hidden-import=pip_system_certs.wrapt_requests
 
       - name: Package executable
         run: ${{ matrix.package_cmd }}
