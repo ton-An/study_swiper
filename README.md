@@ -1,4 +1,4 @@
-# 📚 StudySmarter Flashcard Downloader
+# 📚 Study Swiper
 
 A tool that downloads your flashcard decks from StudySmarter (Vaia) to use them offline or import into other apps like Anki!
 
