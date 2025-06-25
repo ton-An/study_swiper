@@ -2,6 +2,11 @@
 
 A tool that downloads your flashcard decks from StudySmarter (Vaia) to use them offline or import into other apps like Anki!
 
+> 🚧 **Important: Email/Password Login Only**  
+> Currently, only StudySmarter email/password login is supported. Social logins (Google, Facebook, Apple) won't work.  
+>
+> Workaround: Create a new StudySmarter account using email/password specifically for downloading decks.
+
 ## 🎯 What does it do?
 
 This tool lets you:
