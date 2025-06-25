@@ -28,8 +28,7 @@ Download the file for your system:
 
 ### 🔧 Step 2: Make it Executable (Mac/Linux only)
 
-Mac users:  
-Bash  
+Mac users:    
 ```bash
 chmod +x study_swiper_mac
 ```
