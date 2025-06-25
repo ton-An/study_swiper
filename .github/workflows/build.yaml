@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*.*.*'  # Trigger on version tags like v1.2.3
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -45,13 +45,17 @@ jobs:
       - name: Install build dependencies and project
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller flit_core
+          pip install pyinstaller flit_core pip-system-certs
           pip install .
 
       - name: Create PyInstaller entry script (Unix)
         if: runner.os != 'Windows'
         run: |
           cat << 'EOF' > run_study_swiper.py
+          import os
+          import pip_system_certs
+          # Point SSL to system cert store
+          os.environ['SSL_CERT_FILE'] = pip_system_certs.where()
           from study_swiper import cli
 
           if __name__ == '__main__':
@@ -63,6 +67,10 @@ jobs:
         shell: pwsh
         run: |
           @"
+          import os
+          import pip_system_certs
+          # Point SSL to system cert store
+          os.environ['SSL_CERT_FILE'] = pip_system_certs.where()
           from study_swiper import cli
 
           if __name__ == '__main__':
@@ -80,13 +88,14 @@ jobs:
             --hidden-import=click \
             --hidden-import=yaspin \
             --hidden-import=requests \
-            --hidden-import=bs4
+            --hidden-import=bs4 \
+            --hidden-import=pip_system_certs
 
       - name: Build standalone executable (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          pyinstaller --onefile --name study_swiper${{ matrix.ext }} run_study_swiper.py --hidden-import=click --hidden-import=yaspin --hidden-import=requests --hidden-import=bs4
+          pyinstaller --onefile --name study_swiper${{ matrix.ext }} run_study_swiper.py --hidden-import=click --hidden-import=yaspin --hidden-import=requests --hidden-import=bs4 --hidden-import=pip_system_certs
 
       - name: Package executable
         run: ${{ matrix.package_cmd }}
