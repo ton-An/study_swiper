@@ -6,6 +6,7 @@ import re
 from bs4 import BeautifulSoup
 import urllib.request
 import os
+import csv
 
 @click.group()
 def cli():
@@ -59,9 +60,9 @@ def run(deck_ids, username, password):
 
     parsed_decks = parse_decks(decks)
 
-    save_images(parsed_decks)
+    # save_images(parsed_decks)
 
-    # save_decks_to_csv(decks)
+    save_decks_to_csv(parsed_decks)
 
 
 
@@ -205,7 +206,6 @@ def parse_decks(decks):
                 }
                 parsed_decks.append(parsed_deck)
 
-
             spinner.color = 'green'
             spinner.text = 'Decks successfully parsed'
             spinner.ok('✓')
@@ -237,7 +237,7 @@ def parse_card_side(card_side):
 
     return {
         'images': image_urls,
-        'parsed_card_side': str(soup),
+        'card_side': str(soup),
     }
 
 def map_tags(tag_ids, tags):
@@ -251,7 +251,7 @@ def map_tags(tag_ids, tags):
     return applied_tags
 
 def save_images(parsed_decks):
-    with yaspin(text='Fetching decks', color='cyan') as spinner:
+    with yaspin(text='Saving images', color='cyan') as spinner:
         try:
             for deck in parsed_decks:
                 deck_id = deck["id"]
@@ -280,8 +280,6 @@ def save_images(parsed_decks):
             spinner.text = 'Images successfully saved'
             spinner.ok('✓')
 
-            return parsed_decks
-
         except Exception as e:
             spinner.color = 'red'
             spinner.text = 'Saving Images failed'
@@ -289,4 +287,34 @@ def save_images(parsed_decks):
             click.echo(click.style(str(e), fg='red'))
             raise e
 
+
+def save_decks_to_csv(parsed_decks):
+    with yaspin(text='Saving Decks to CSV', color='cyan') as spinner:
+        try:
+            for deck in parsed_decks:
+                deck_id = deck['id']
+
+                does_dir_exist = os.path.exists(deck_id)
+
+                if not does_dir_exist:
+                    os.makedirs(deck_id)
+
+                with open(f'{deck_id}/{deck_id}.csv', 'w', newline='') as ankCsv:
+                    writer = csv.writer(ankCsv)
+                    fieldnames = ['Front', 'Back', 'Tags']
+                    writer.writerow(fieldnames)
+
+                    cards = deck['cards']
+                    for card in cards:
+                        front = card['front']['card_side']
+                        back = card['back']['card_side']
+                        tags = card['tags']
+                        writer.writerow([front, back, tags])
+
+        except Exception as e:
+            spinner.color = 'red'
+            spinner.text = 'Saving Decks to CSV failed'
+            spinner.fail('✗')
+            click.echo(click.style(str(e), fg='red'))
+            raise e
 
