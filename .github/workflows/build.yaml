@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*.*.*'  # Trigger on version tags like v1.0.0
 
 jobs:
   build:
@@ -64,9 +64,8 @@ jobs:
           @"
           from study_swiper import cli
 
-          if (__name__ -eq '__main__') {
+          if __name__ == '__main__':
               cli()
-          }
           "@ | Out-File -Encoding ASCII run_study_swiper.py
 
       - name: Build standalone executable (Unix)
