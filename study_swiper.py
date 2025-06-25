@@ -121,7 +121,7 @@ def get_decks(auth_token, deck_ids):
                 tags_url = f'https://prod.studysmarter.de/studysets/{deck_id}/tags/?content_filter=flashcards'
 
                 cards = get_cards(cards_url, request_headers, deck_id, [])
-                tags = get_tags(tags_url, deck_id, request_headers)
+                tags = get_tags(tags_url, request_headers, deck_id)
 
                 deck = {
                     'id': deck_id,
