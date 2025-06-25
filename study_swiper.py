@@ -60,7 +60,7 @@ def run(deck_ids, username, password):
 
     parsed_decks = parse_decks(decks)
 
-    # save_images(parsed_decks)
+    save_images(parsed_decks)
 
     save_decks_to_csv(parsed_decks)
 
