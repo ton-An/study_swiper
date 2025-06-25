@@ -1,6 +1,7 @@
 name: Build & Release study_swiper CLI
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*.*.*'  # Trigger when you push a tag like v1.0.0
