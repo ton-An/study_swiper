@@ -15,11 +15,11 @@ This tool lets you:
 
 ### 📥 Step 1: Download the Tool
 
-Go to the Releases page  
+Go to the [Releases page](https://github.com/ton-An/study_swiper/releases) 
 Download the file for your system:  
-- 🪟 Windows: `study_swiper_windows.exe`  
-- 🍎 Mac: `study_swiper_mac`  
-- 🐧 Linux: `study_swiper_linux`  
+- 🪟 Windows: `study_swiper-windows-x86_64.zip`  
+- 🍎 Mac: `study_swiper-macos-arm64.tar.gz` for M-Series Macs (2020 onwards) and `study_swiper-macos-x86_64.tar.gz` for Intel Macs
+- 🐧 Linux: `study_swiper-linux-x86_64.tar.gz `  
 
 ### 🔧 Step 2: Make it Executable (Mac/Linux only)
 
