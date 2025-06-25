@@ -116,7 +116,57 @@ If you run into issues:
 - Make sure your deck is public or you have access to it  
 - Try downloading one deck at a time if multiple decks fail  
 
-Happy studying! 📖✨
+
+### 🐛 Reporting Issues
+
+Found a bug or have a problem? Create an issue on GitHub!
+#### 📝 How to write a good issue:
+
+For bugs:
+```markdown
+**Description:**
+Brief description of what went wrong
+
+**Steps to reproduce:**
+1. Run command ```./study_swiper run 12345```
+2. Enter username and password
+3. See error
+
+**Expected behavior:**
+What should have happened
+
+**Actual behavior:**
+What actually happened
+
+**Error message:**
+Paste the full error message here
+Text Only
+
+**System info:**
+- OS: Windows 10 / macOS 12.1 / Ubuntu 20.04
+- Python version: 3.9.7
+- Tool version: 1.0.0
+```
+
+For feature requests:
+```
+**Feature description:**
+What would you like the tool to do?
+
+**Use case:**
+Why would this be helpful?
+
+**Example:**
+How would it work?
+```
+🏷️ Issue labels we use:
+
+    🐛 bug - Something isn't working
+    ✨ enhancement - New feature request
+    📚 documentation - Documentation improvements
+    ❓ question - Questions about usage
+    👍 good first issue - Good for newcomers
+
 
 ## 🤝 Contributing
 
@@ -143,3 +193,5 @@ What this means:
     ✅ Private use allowed
     ⚠️ No warranty provided
     📝 Include the license when redistributing
+
+Happy studying! 📖✨
