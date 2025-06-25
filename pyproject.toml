@@ -1,0 +1,15 @@
+[project]
+name = "study_swiper"
+version = "1.0.0"
+description = "Swipes decks from Study Smarter (Vaia)"
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1",
+]
+
+[project.scripts]
+study_swiper = "study_swiper:cli"
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
