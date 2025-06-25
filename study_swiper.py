@@ -204,6 +204,7 @@ def parse_decks(decks):
                     'deck_id': deck_id,
                     'cards': parsed_cards,
                 }
+                parsed_decks.append(parsed_deck)
 
 
             spinner.color = 'green'
