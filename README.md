@@ -60,7 +60,7 @@ The tool will ask you for:
 **Quick mode (all at once):**  
 Bash  
 ```bash
-./study_swiper run 934059 123456 --username yourname --password yourpass
+./study_swiper run 934059 123456 --username ted --password mosbius123
 ```
 
 ## 📁 Where are my files?
