@@ -74,7 +74,7 @@ The tool will prompt you for:
 
 **⚡ Command line mode:**
 ```bash
-./study_swiper run 934059 123456 --username your-email --password your-password
+./study_swiper run 934059 123456 --username ted --password mosbius123
 ```
 
 ---
