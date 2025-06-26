@@ -17,10 +17,12 @@
   </a>
 </p>
 
-> **⚠️ Important Notice**  
-> Currently, only StudySmarter email/password login is supported. Social logins (Google, Facebook, Apple) are not compatible.
+> **⚠️ Important Notice**\
+> Currently, only StudySmarter email/password login is supported. Social logins
+> (Google, Facebook, Apple) are not compatible.
 >
-> **Workaround:** Create a new StudySmarter account using email/password specifically for downloading decks.
+> **Workaround:** Create a new StudySmarter account using email/password
+> specifically for downloading decks.
 
 ## ✨ Features
 
@@ -33,9 +35,14 @@
 
 ## 🚀 Quick Start
 
+### 🍎 MacOS Video Tutorial
+
+![MacOS Tutorial](macos_tutorial.mp4)
+
 ### 📥 1. Download
 
-Visit the [Releases page](https://github.com/ton-An/study_swiper/releases) and download the appropriate file:
+Visit the [Releases page](https://github.com/ton-An/study_swiper/releases) and
+download the appropriate file:
 
 - 🪟 **Windows:** `study_swiper-windows-x86_64.zip`
 - 🍎 **Mac (M-Series):** `study_swiper-macos-arm64.tar.gz`
@@ -65,16 +72,19 @@ https://app.vaia.com/studyset/934059?trackingSource=studysets_library
 ### 💻 4. Run the Tool
 
 **🎯 Interactive mode:**
+
 ```bash
 ./study_swiper run
 ```
 
 The tool will prompt you for:
+
 - 👤 Username
 - 🔐 Password (hidden input)
 - 📚 Deck IDs (space-separated)
 
 **⚡ Command line mode:**
+
 ```bash
 ./study_swiper run 934059 123456 --username your-email --password your-password
 ```
@@ -99,7 +109,8 @@ Downloaded files are organized as follows:
 
 ### 🖼️ Step 1: Copy Images
 
-Copy the downloaded images (not the containing folder) to your Anki media folder:
+Copy the downloaded images (not the containing folder) to your Anki media
+folder:
 
 - 🪟 **Windows:** `%APPDATA%\Anki2\User 1\collection.media\`
 - 🍎 **Mac:** `~/Library/Application Support/Anki2/User 1/collection.media/`
@@ -139,13 +150,16 @@ The tool displays real-time progress:
 ### ❗ Common Issues
 
 **"Command not found"**
+
 - Ensure you're in the same directory as the downloaded file
 - Use `./study_swiper` (include the `./` prefix)
 
 **"Permission denied"**
+
 - Make the file executable: `chmod +x study_swiper`
 
 **"Authentication failed"**
+
 - Verify your StudySmarter email and password
 - Ensure you're not using social login credentials
 
@@ -163,7 +177,8 @@ We welcome contributions! Here's how to get started:
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
 3. Commit your changes: `git commit -m 'feat: add amazing feature'`
-   - Please follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+   - Please follow
+     [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
@@ -178,26 +193,26 @@ We welcome contributions! Here's how to get started:
 
 ## 🐛 Reporting Issues
 
-Found a bug or need a feature? [Create an issue on GitHub](https://github.com/ton-An/study_swiper/issues)! 🚀
+Found a bug or need a feature?
+[Create an issue on GitHub](https://github.com/ton-An/study_swiper/issues)! 🚀
 
 ### 📝 Bug Report Template
 
 ```markdown
-**Description:**
-Brief description of the problem
+**Description:** Brief description of the problem
 
 **Steps to Reproduce:**
+
 1. Run command `./study_swiper run 12345`
 2. Enter credentials
 3. Observe error
 
-**Expected vs Actual Behavior:**
-What should happen vs what actually happened
+**Expected vs Actual Behavior:** What should happen vs what actually happened
 
-**Error Message:**
-[Paste the complete error message]
+**Error Message:** [Paste the complete error message]
 
 **System Information:**
+
 - OS: [Windows 10 / macOS 12.1 / Ubuntu 20.04]
 - Tool version: [e.g., 1.0.0]
 ```
@@ -205,14 +220,11 @@ What should happen vs what actually happened
 ### ✨ Feature Request Template
 
 ```markdown
-**Feature Description:**
-What functionality would you like to see?
+**Feature Description:** What functionality would you like to see?
 
-**Use Case:**
-Why would this be helpful?
+**Use Case:** Why would this be helpful?
 
-**Example:**
-How would it work in practice?
+**Example:** How would it work in practice?
 ```
 
 ### 🏷️ Issue Labels
@@ -227,9 +239,11 @@ How would it work in practice?
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+for details.
 
 **What this means:**
+
 - ✅ Free for personal and commercial use
 - ✅ Modify and redistribute freely
 - ✅ Private use allowed
