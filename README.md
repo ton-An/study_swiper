@@ -1,5 +1,3 @@
-# Study Swiper
-
 <p align="center">
   <img src="logo.png" width="350" alt="Study Swiper Logo" />
 </p>
@@ -65,8 +63,8 @@ chmod +x study_swiper
 
 ```
 https://app.vaia.com/studyset/934059?trackingSource=studysets_library
-                          ^^^^^^
-                        Deck ID 📝
+                              ^^^^^^
+                             Deck ID 📝
 ```
 
 ### 💻 4. Run the Tool
@@ -86,7 +84,7 @@ The tool will prompt you for:
 **⚡ Command line mode:**
 
 ```bash
-./study_swiper run 934059 123456 --username your-email --password your-password
+./study_swiper run 934059 123456 --username ted --password mosbius123
 ```
 
 ---
