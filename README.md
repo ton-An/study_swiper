@@ -1,211 +1,243 @@
+# Study Swiper
+
 <p align="center">
-  <img src="docs/public/images/app_icon_transparent_bg.png" width="150" />
+  <img src="logo.png" width="350" alt="Study Swiper Logo" />
 </p>
 
-<h1 align="center">Study Swiper</h1>
-
 <p align="center">
-A tool that downloads your flashcard decks from StudySmarter (Vaia) to use them offline or import into other apps like Anki!
+  <strong>Download your flashcard decks from StudySmarter (Vaia) to use them offline or import into other apps like Anki</strong>
 </p>
 
 <p align="center">
   <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" />
   </a>
   <a href="https://github.com/ton-An/study_swiper/stargazers">
-    <img src="https://img.shields.io/github/stars/ton-An/study_swiper?style=social" />
+    <img src="https://img.shields.io/github/stars/ton-An/study_swiper?style=social" alt="GitHub Stars" />
   </a>
 </p>
 
-
-> 🚧 **Important: Email/Password Login Only**  
-> Currently, only StudySmarter email/password login is supported. Social logins (Google, Facebook, Apple) won't work.  
+> **⚠️ Important Notice**  
+> Currently, only StudySmarter email/password login is supported. Social logins (Google, Facebook, Apple) are not compatible.
 >
-> Workaround: Create a new StudySmarter account using email/password specifically for downloading decks.
+> **Workaround:** Create a new StudySmarter account using email/password specifically for downloading decks.
 
-## 🎯 What does it do?
+## ✨ Features
 
-This tool lets you:
+- ✅ **Download flashcard decks** from StudySmarter
+- 🖼️ **Save all images** from your flashcards automatically
+- 📄 **Export to CSV format** compatible with Anki and other flashcard apps
+- 🏷️ **Preserve tags** in an organized format
 
-- ✅ Download flashcard decks from StudySmarter  
-- 🖼️ Save all images from your flashcards  
-- 📄 Export to CSV format (compatible with Anki and other flashcard apps)  
-- 🏷️ Keep all your tags organized  
+---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### 📥 Step 1: Download the Tool
+### 📥 1. Download
 
-Go to the [Releases page](https://github.com/ton-An/study_swiper/releases) 
-Download the file for your system:  
-- 🪟 Windows: `study_swiper-windows-x86_64.zip`  
-- 🍎 Mac: `study_swiper-macos-arm64.tar.gz` for M-Series Macs (2020 onwards) and `study_swiper-macos-x86_64.tar.gz` for Intel Macs
-- 🐧 Linux: `study_swiper-linux-x86_64.tar.gz `  
+Visit the [Releases page](https://github.com/ton-An/study_swiper/releases) and download the appropriate file:
 
-### 🔧 Step 2: Make it Executable (Mac/Linux only)
- 
+- 🪟 **Windows:** `study_swiper-windows-x86_64.zip`
+- 🍎 **Mac (M-Series):** `study_swiper-macos-arm64.tar.gz`
+- 🍎 **Mac (Intel):** `study_swiper-macos-x86_64.tar.gz`
+- 🐧 **Linux:** `study_swiper-linux-x86_64.tar.gz`
+
+### 🔧 2. Setup (Mac/Linux only)
+
+Make the file executable:
+
 ```bash
 chmod +x study_swiper
 ```
 
-### 🔍 Step 3: Find Your Deck IDs
+### 🔍 3. Find Your Deck IDs
 
-Open StudySmarter in your browser  
-Go to the deck you want to download  
+1. Open StudySmarter in your browser
+2. Navigate to the deck you want to download
+3. Copy the deck ID from the URL:
 
-Look at the URL – it will look like this:  
-```text
+```
 https://app.vaia.com/studyset/934059?trackingSource=studysets_library
+                          ^^^^^^
+                        Deck ID 📝
 ```
 
-The deck ID is the number: 934059 📝
+### 💻 4. Run the Tool
 
-### 💻 Step 4: Run the Tool
-
-**Easy mode (interactive):**  
-Bash  
+**🎯 Interactive mode:**
 ```bash
 ./study_swiper run
 ```
 
-The tool will ask you for:  
-- 👤 Your username  
-- 🔐 Your password (hidden while typing)  
-- 📚 Deck IDs (paste them separated by spaces)
+The tool will prompt you for:
+- 👤 Username
+- 🔐 Password (hidden input)
+- 📚 Deck IDs (space-separated)
 
-**Quick mode (all at once):**  
-Bash  
+**⚡ Command line mode:**
 ```bash
-./study_swiper run 934059 123456 --username ted --password mosbius123
+./study_swiper run 934059 123456 --username your-email --password your-password
 ```
 
-## 📁 Where are my files?
+---
 
-After downloading, you'll find:  
+## 📁 Output Structure
+
+Downloaded files are organized as follows:
+
 ```
-📂 934059/                (folder named after deck ID)
-├── 📄 934059.csv         (your flashcards)
-├── 🖼️ image1.jpg         (all images from cards)
+📂 934059/
+├── 📄 934059.csv      # Flashcard data
+├── 🖼️ image1.jpg      # Downloaded images
 ├── 🖼️ image2.png
-└── …
-```
-## 🎨 What you'll see while running
-
-The tool shows progress updates:
-
-- 🔐 **Authenticating** → ✅ Authentication successful  
-- 📥 **Fetching decks** → ✅ Decks successfully fetched  
-- 🔄 **Parsing deck 934059** → ✅ Decks successfully parsed  
-- 🖼️ **Fetching images** → ✅ Images successfully saved  
-- 💾 **Saving to CSV** → ✅ Decks successfully saved to CSV  
-
-## ❓ Troubleshooting
-
-**"Command not found" error:**
-
-- Make sure you're in the same folder as the downloaded file  
-- Use `./study_swiper` (with the `./` in front)
-
-**"Permission denied" error:**
-
-- You forgot to make it executable (see Step 2)
-
-**"Authentication failed" error:**
-
-- Double-check your username and password  
-- Make sure you're using your StudySmarter login (not Google/Facebook login)
-
-## 💡 Pro Tips
-
-- 🚀 Download multiple decks at once by listing all IDs  
-- 📊 The CSV files can be imported directly into Anki  
-- 🖼️ All images are downloaded automatically – no broken pictures!  
-- 🏷️ Tags are preserved in Anki-compatible format  
-
-## 🆘 Need Help?
-
-If you run into issues:
-
-- Check the error message – it usually tells you what's wrong  
-- Make sure your deck is public or you have access to it  
-- Try downloading one deck at a time if multiple decks fail  
-
-
-### 🐛 Reporting Issues
-
-Found a bug or have a problem? Create an issue on GitHub!
-#### 📝 How to write a good issue:
-
-For bugs:
-```markdown
-**Description:**
-Brief description of what went wrong
-
-**Steps to reproduce:**
-1. Run command ```./study_swiper run 12345```
-2. Enter username and password
-3. See error
-
-**Expected behavior:**
-What should have happened
-
-**Actual behavior:**
-What actually happened
-
-**Error message:**
-Paste the full error message here
-Text Only
-
-**System info:**
-- OS: Windows 10 / macOS 12.1 / Ubuntu 20.04
-- Python version: 3.9.7
-- Tool version: 1.0.0
+└── ...
 ```
 
-For feature requests:
-```
-**Feature description:**
-What would you like the tool to do?
+---
 
-**Use case:**
-Why would this be helpful?
+## 📥 Importing to Anki
 
-**Example:**
-How would it work?
-```
-🏷️ Issue labels we use:
+### 🖼️ Step 1: Copy Images
 
-    🐛 bug - Something isn't working
-    ✨ enhancement - New feature request
-    📚 documentation - Documentation improvements
-    ❓ question - Questions about usage
-    👍 good first issue - Good for newcomers
+Copy the downloaded images (not the containing folder) to your Anki media folder:
 
+- 🪟 **Windows:** `%APPDATA%\Anki2\User 1\collection.media\`
+- 🍎 **Mac:** `~/Library/Application Support/Anki2/User 1/collection.media/`
+- 🐧 **Linux:** `~/.local/share/Anki2/User 1/collection.media/`
+
+### 📝 Step 2: Import CSV
+
+1. Open Anki Desktop
+2. Go to **File → Import...**
+3. Select your CSV file (e.g., `934059.csv`)
+4. Configure import settings:
+   - **Field separator:** Comma
+   - **Field mapping:**
+     - Field 1 → Front
+     - Field 2 → Back
+     - Field 3 → Tags
+5. Click **Import**
+
+🎉 **That's it!** Your cards should now appear in Anki with all images working.
+
+---
+
+## 📊 Progress Indicators
+
+The tool displays real-time progress:
+
+- 🔐 **Authenticating** → ✅ Authentication successful
+- 📥 **Fetching decks** → ✅ Decks successfully fetched
+- 🔄 **Parsing deck** → ✅ Decks successfully parsed
+- 🖼️ **Fetching images** → ✅ Images successfully saved
+- 💾 **Saving to CSV** → ✅ Decks successfully saved to CSV
+
+---
+
+## 🔧 Troubleshooting
+
+### ❗ Common Issues
+
+**"Command not found"**
+- Ensure you're in the same directory as the downloaded file
+- Use `./study_swiper` (include the `./` prefix)
+
+**"Permission denied"**
+- Make the file executable: `chmod +x study_swiper`
+
+**"Authentication failed"**
+- Verify your StudySmarter email and password
+- Ensure you're not using social login credentials
+
+### 💡 Pro Tips
+
+- 🚀 Download multiple decks by listing all IDs in one command
+- 📊 Try downloading one deck at a time if multiple decks fail
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+We welcome contributions! Here's how to get started:
 
 1. Fork the repository
-2. Create your feature branch (git checkout -b feature/amazing-feature)
-3. Commit your changes (git commit -m 'feat: some amazing feature') - please adhere to [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
-4. Push to the branch (git push origin feature/amazing-feature)
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'feat: add amazing feature'`
+   - Please follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
-### 💭 Ideas for contributions:
-- Improve error handling and messages
-    Add progress bars for large deck downloads
+### 💭 Contribution Ideas
 
+- Support for other sign in providers
+- Improve error handling and user feedback
+- Support for additional export formats
+- Enhanced documentation
+
+---
+
+## 🐛 Reporting Issues
+
+Found a bug or need a feature? [Create an issue on GitHub](https://github.com/ton-An/study_swiper/issues)! 🚀
+
+### 📝 Bug Report Template
+
+```markdown
+**Description:**
+Brief description of the problem
+
+**Steps to Reproduce:**
+1. Run command `./study_swiper run 12345`
+2. Enter credentials
+3. Observe error
+
+**Expected vs Actual Behavior:**
+What should happen vs what actually happened
+
+**Error Message:**
+[Paste the complete error message]
+
+**System Information:**
+- OS: [Windows 10 / macOS 12.1 / Ubuntu 20.04]
+- Tool version: [e.g., 1.0.0]
+```
+
+### ✨ Feature Request Template
+
+```markdown
+**Feature Description:**
+What functionality would you like to see?
+
+**Use Case:**
+Why would this be helpful?
+
+**Example:**
+How would it work in practice?
+```
+
+### 🏷️ Issue Labels
+
+- 🐛 **bug** - Something isn't working
+- ✨ **enhancement** - New feature request
+- 📚 **documentation** - Documentation improvements
+- ❓ **question** - Questions about usage
+- 👍 **good first issue** - Good for newcomers
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-What this means:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-    ✅ Free to use for personal and commercial purposes
-    ✅ Modify and distribute as you wish
-    ✅ Private use allowed
-    ⚠️ No warranty provided
-    📝 Include the license when redistributing
+**What this means:**
+- ✅ Free for personal and commercial use
+- ✅ Modify and redistribute freely
+- ✅ Private use allowed
+- ⚠️ No warranty provided
+- 📝 Must include license when redistributing
 
-Happy studying! 📖✨
+---
+
+<div align="center">
+  <strong>Happy studying! 📚✨</strong>
+</div>
