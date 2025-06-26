@@ -1,5 +1,3 @@
-# Study Swiper
-
 <p align="center">
   <img src="logo.png" width="350" alt="Study Swiper Logo" />
 </p>
