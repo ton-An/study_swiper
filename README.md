@@ -34,8 +34,7 @@
 ## 🚀 Quick Start
 
 ### 🍎 MacOS Video Tutorial
-
-![MacOS Tutorial](macos_tutorial.mp4)
+https://github.com/user-attachments/assets/9f9c45c7-f598-43be-ad0d-5553b7efa9f4
 
 ### 📥 1. Download
 
