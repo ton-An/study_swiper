@@ -58,8 +58,8 @@ chmod +x study_swiper
 
 ```
 https://app.vaia.com/studyset/934059?trackingSource=studysets_library
-                          ^^^^^^
-                        Deck ID 📝
+                              ^^^^^^
+                             Deck ID 📝
 ```
 
 ### 💻 4. Run the Tool
